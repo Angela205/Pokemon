@@ -21,6 +21,8 @@ const PokedexScreen = ({ navigation }) => {
           allPokemon = [...allPokemon, ...data];
           offset += limit;
         }
+        // Ordenar la lista alfabéticamente por nombre de Pokémon
+        allPokemon.sort((a, b) => a.name.localeCompare(b.name));
         setPokemonList(allPokemon);
         setLoading(false);
       } catch (error) {
@@ -37,14 +39,11 @@ const PokedexScreen = ({ navigation }) => {
       style={styles.item}
       onPress={() => navigation.navigate('PokemonDetail', { pokemonName: item.name })}
     >
+      <Text style={styles.name}>{item.name.charAt(0).toUpperCase() + item.name.slice(1)}</Text>
       <Image
         style={styles.image}
         source={{ uri: `${POKEMON_SPRITE_BASE_URL}${getPokemonIdFromUrl(item.url)}.png` }}
       />
-      <View style={styles.info}>
-        <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.code}>Código: {getPokemonIdFromUrl(item.url)}</Text>
-      </View>
     </TouchableOpacity>
   );
 
@@ -79,29 +78,24 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   item: {
-    backgroundColor: '#f9c2ff',
+    backgroundColor: '#463b71',
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
     borderRadius: 10,
-    flexDirection: 'row',
     alignItems: 'center',
   },
   image: {
-    width: 70,
-    height: 70,
-    borderRadius: 25,
-  },
-  info: {
-    marginLeft: 10,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    marginTop: 10,
   },
   name: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: 'bold',
-  },
-  code: {
-    fontSize: 16,
-    color: 'gray',
+    color: 'white',
+    textTransform: 'capitalize', // Capitaliza la primera letra de cada palabra
   },
   loadingContainer: {
     flex: 1,

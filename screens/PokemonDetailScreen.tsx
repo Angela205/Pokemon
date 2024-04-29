@@ -41,7 +41,7 @@ const PokemonDetailScreen = ({ route }) => {
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="blue" />
+        <ActivityIndicator size="large" color="#9b8cba" />
         <Text>Cargando...</Text>
       </View>
     );
@@ -49,19 +49,14 @@ const PokemonDetailScreen = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.image}
-        source={{ uri: `${POKEMON_SPRITE_BASE_URL}${pokemonDetails.id}.png` }}
-      />
-      <Text style={styles.name}>{pokemonDetails.name}</Text>
-      <Text style={styles.info}>Altura: {pokemonDetails.height} decímetros</Text>
-      <Text style={styles.info}>Peso: {pokemonDetails.weight} hectogramos</Text>
-      <Text style={styles.sectionTitle}>Habilidades:</Text>
-      <FlatList
-        data={pokemonDetails.abilities}
-        renderItem={renderAbilityItem}
-        keyExtractor={(item, index) => index.toString()}
-      />
+      <View style={styles.imageContainer}>
+        <Image
+          style={styles.image}
+          source={{ uri: `${POKEMON_SPRITE_BASE_URL}${pokemonDetails.id}.png` }}
+        />
+      </View>
+      <Text style={styles.name}>{pokemonDetails.name.charAt(0).toUpperCase() + pokemonDetails.name.slice(1)}</Text>
+      <Text style={styles.info}>Su poder que lo caracteriza: {pokemonDetails.abilities[0].ability.name}</Text>
       <Text style={styles.sectionTitle}>Movimientos:</Text>
       <FlatList
         data={pokemonDetails.moves}
@@ -77,26 +72,37 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     padding: 20,
+    backgroundColor: '#19114b',
+  },
+  imageContainer: {
+    backgroundColor: '#19113b',
+    borderRadius: 100, // Hacer el contenedor circular
+    padding: 5,
+    overflow: 'hidden', // Recortar la imagen para que se ajuste al contenedor circular
   },
   image: {
     width: 200,
     height: 200,
-    marginBottom: 10,
+    borderRadius: 100, // Hacer la imagen circular
   },
   name: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 10,
+    textTransform: 'capitalize',
+    color: '#9b8cba',
   },
   info: {
-    fontSize: 16,
-    marginBottom: 5,
+    fontSize: 20,
+    marginBottom: 10,
+    color: '#9b8cba',
   },
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     marginTop: 10,
     marginBottom: 5,
+    color: '#9b8cba',
   },
   item: {
     backgroundColor: '#f9c2ff',
@@ -108,11 +114,13 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
+    color: '#19114b',
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#19114b',
   },
 });
 
